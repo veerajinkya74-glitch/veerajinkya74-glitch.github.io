@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajinkya Deepak Veer | MCA Student, Data Science & Analytics</title>
+<meta name="description" content="Portfolio of Ajinkya Deepak Veer, MCA student in Data Science & Analytics. Python, SQL, EDA, dashboards and machine learning projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="progress"></div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="glow" aria-hidden="true"></div>
+<header class="nav">
+  <a class="logo" href="#top">Ajinkya Veer</a>
+  <nav>
+    <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#education">Education</a><a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="hero-text">
+    <h1 class="name">Ajinkya Deepak Veer</h1>
+    <p class="role">MCA Student | Data Science &amp; Analytics</p>
+    <h2 class="tagline">I turn raw data into decisions people can act on.</h2>
+    <p class="typing">I work with <span id="typed"></span><b class="caret"></b></p>
+    <p class="lead">I'm Ajinkya, a second-year MCA student in Pune. I clean data, explore it, build dashboards, and train models in Python, SQL and Power BI.</p>
+    <div class="cta">
+      <a class="btn primary" href="#projects">View projects</a>
+      <a class="btn" href="Ajinkya_Veer_Resume.docx" download>Download resume</a>
+      <a class="btn" href="#contact">Contact me</a>
+    </div>
+  </div>
+  <figure class="chart" aria-label="Animated chart of rising monthly values">
+    <svg id="heroChart" viewBox="0 0 400 260" role="img"></svg>
+    <figcaption>Sample monthly trend, drawn live</figcaption>
+  </figure>
+</section>
+
+<section id="about" class="block">
+  <h2>About me</h2>
+  <p>I'm doing my Master of Computer Applications (MCA) with a specialization in Data Science &amp; Analytics. I enjoy the full path from messy dataset to clear answer: cleaning, exploring, visualizing, and then building something people can use.</p>
+  <p>My projects include a restaurant data analysis, a machine learning web app, and a live dashboard for my father's business. I learn fast and I like solving real problems.</p>
+  <ul class="stats">
+    <li><strong data-count="3">0</strong> projects built</li>
+    <li><strong data-count="3">0</strong> ML models compared</li>
+    <li><strong data-count="15">0</strong> symptoms used in one predictor</li>
+  </ul>
+</section>
+
+<section id="skills" class="block">
+  <h2>Skills</h2>
+  <div class="skills" id="skillList"></div>
+  <div class="edit-only add-row"><button class="btn" data-act="addskill">+ Add skill</button></div>
+</section>
+
+<section id="projects" class="block">
+  <h2>Projects</h2>
+  <div class="cards" id="projectList"></div>
+  <div class="edit-only add-row"><button class="btn" data-act="addproj">+ Add project</button></div>
+</section>
+
+<section id="education" class="block">
+  <h2>Education</h2>
+  <ol class="timeline">
+    <li><h3>Master of Computer Applications (MCA)</h3><p>Data Science &amp; Analytics · 2024 – Present · Currently 2nd year<br>Ajinkya D.Y. Patil University, Pune</p></li>
+    <li><h3>Bachelor of Computer Applications (BCA)</h3><p>Completed<br>MES Senior College, Kothrud, Pune</p></li>
+  </ol>
+</section>
+
+<section id="contact" class="block">
+  <h2>GitHub &amp; contact</h2>
+  <p>Code for my projects is on GitHub. I'm open to data science and analytics roles and internships.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/veerajinkya74-glitch" target="_blank" rel="noopener">GitHub profile</a>
+    <a class="btn" href="mailto:veerajinkya@gmail.com">veerajinkya@gmail.com</a>
+  </div>
+</section>
+</main>
+<footer>© <span id="yr"></span> Ajinkya Deepak Veer · Pune, Maharashtra</footer>
+<div id="editbar" hidden><strong>Edit mode</strong>
+  <button class="btn" data-act="addskill">+ Skill</button><button class="btn" data-act="addproj">+ Project</button>
+  <button class="btn primary" data-act="export">Download data.js</button><button class="btn" data-act="reset">Reset</button><button class="btn" data-act="exit">Exit</button></div>
+<datalist id="gl"></datalist>
+<dialog id="dlg"><form id="dform"><h3 id="dtitle"></h3><div id="dfields"></div>
+  <div class="dbtns"><button type="button" class="btn" id="dcancel">Cancel</button><button type="submit" class="btn primary">Save</button></div></form></dialog>
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
