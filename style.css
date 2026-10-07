@@ -65,8 +65,7 @@ footer{text-align:center;color:var(--mute);padding:2.5rem 5vw;border-top:1px sol
 #glow{position:fixed;width:360px;height:360px;left:0;top:0;margin:-180px 0 0 -180px;border-radius:50%;background:radial-gradient(circle,rgba(76,201,240,.13),transparent 65%);pointer-events:none;z-index:0;transition:opacity .3s}
 #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--a),var(--b));z-index:10}
 .nav nav a.active{color:var(--a)}
-.nav,main,footer{position:relative;z-index:1}
-.nav{position:sticky}
+main,footer{position:relative;z-index:1}
 .typing{font:600 1.15rem Sora,sans-serif;margin-bottom:.8rem;min-height:1.8em}
 #typed{color:var(--b)}
 .caret{display:inline-block;width:2px;height:1.1em;background:var(--b);margin-left:3px;vertical-align:-.15em;animation:blink 1s steps(2) infinite}
@@ -117,3 +116,7 @@ dialog label{display:block;font-size:.88rem;color:var(--mute);margin-bottom:.8re
 dialog input,dialog select,dialog textarea{display:block;width:100%;margin-top:.25rem;padding:.55rem .7rem;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;font:inherit}
 .dbtns{display:flex;justify-content:flex-end;gap:.6rem}
 .mute{color:var(--mute)}
+
+/* navbar always on top of cards and effects */
+.nav{position:sticky;top:0;z-index:50;background:rgba(13,18,32,.96)}
+#progress{z-index:60}

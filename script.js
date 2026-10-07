@@ -34,7 +34,11 @@ function renderProjects() {
     || '<p class="mute">No projects yet.</p>';
   projectList.querySelectorAll(".card").forEach((el, i) => prep(el, "zoom", i));
 }
-const commit = () => { save(); renderSkills(); renderProjects(); };
+function updateStats() {
+  const v = {statP: data.projects.length, statS: data.skills.length, statG: new Set(data.skills.map(x => x.group)).size};
+  for (const id in v) { const el = $(id); el.dataset.count = v[id]; if (el.dataset.done) el.textContent = v[id]; }
+}
+const commit = () => { save(); updateStats(); renderSkills(); renderProjects(); };
 
 // Pop-up form used for adding and updating
 const dlg = $("dlg"), dform = $("dform");
@@ -103,7 +107,7 @@ projectList.addEventListener("keydown", e => { if (e.key === "Enter" || e.key ==
 [[".block h2", "left"], [".block > p", "up"], [".stats li", "up"], [".timeline li", "right"], [".block .cta", "up"]].forEach(([sel, dir]) =>
   document.querySelectorAll(sel).forEach((el, i) => prep(el, dir, i)));
 
-renderSkills(); renderProjects(); booted = true;
+renderSkills(); renderProjects(); updateStats(); booted = true;
 
 // Hero chart: bars + trend line, built with SVG
 (function () {
@@ -152,7 +156,7 @@ const cio = new IntersectionObserver(es => es.forEach(e => {
     el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
     if (p < 1) requestAnimationFrame(step);
   })(t0);
-  cio.unobserve(el);
+  el.dataset.done = 1; cio.unobserve(el);
 }), {threshold: .6});
 document.querySelectorAll("[data-count]").forEach(el => cio.observe(el));
 
