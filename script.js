@@ -38,7 +38,26 @@ function updateStats() {
   const v = {statP: data.projects.length, statS: data.skills.length, statG: new Set(data.skills.map(x => x.group)).size};
   for (const id in v) { const el = $(id); el.dataset.count = v[id]; if (el.dataset.done) el.textContent = v[id]; }
 }
-const commit = () => { save(); updateStats(); renderSkills(); renderProjects(); };
+function drawRadar() {
+  const g = {}; data.skills.forEach(s => (g[s.group] = g[s.group] || []).push(s.level));
+  const names = Object.keys(g), n = names.length, svg = $("radar");
+  if (n < 3) { svg.innerHTML = ""; return; }
+  const cx = 190, cy = 150, R = 88, pt = (i, v) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [(cx + Math.cos(a) * R * v / 5).toFixed(1), (cy + Math.sin(a) * R * v / 5).toFixed(1)]; };
+  let h = "";
+  for (let r = 1; r <= 5; r++) h += `<polygon class="rring" points="${names.map((_, i) => pt(i, r).join(",")).join(" ")}"/>`;
+  names.forEach((nm, i) => { const [x, y] = pt(i, 5), [lx, ly] = pt(i, 6.3);
+    h += `<line class="rax" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/><text class="rlab" x="${lx}" y="${ly}" text-anchor="${lx < cx - 5 ? "end" : lx > cx + 5 ? "start" : "middle"}" dominant-baseline="middle">${esc(nm)}</text>`; });
+  const vals = names.map(nm => g[nm].reduce((a, b) => a + b, 0) / g[nm].length);
+  h += `<polygon class="rshape" points="${vals.map((v, i) => pt(i, v).join(",")).join(" ")}"/>` + vals.map((v, i) => { const [x, y] = pt(i, v); return `<circle class="rdot" cx="${x}" cy="${y}" r="4"/>`; }).join("");
+  svg.innerHTML = h;
+}
+function drawTools() {
+  const c = {}; data.projects.forEach(p => new Set(p.tags.split(/[·,|]/).map(x => x.trim()).filter(Boolean)).forEach(t => c[t] = (c[t] || 0) + 1));
+  const top = Object.entries(c).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 8), m = top[0] ? top[0][1] : 1;
+  $("toolBars").innerHTML = top.map(([t, n]) => `<div class="tb"><span>${esc(t)}</span><div class="meter"><i style="width:${n / m * 100}%"></i></div><em>${n}</em></div>`).join("") || '<p class="mute">Add projects to see tools.</p>';
+}
+function drawViz() { drawRadar(); drawTools(); }
+const commit = () => { save(); updateStats(); drawViz(); renderSkills(); renderProjects(); };
 
 // Pop-up form used for adding and updating
 const dlg = $("dlg"), dform = $("dform");
@@ -104,10 +123,10 @@ projectList.addEventListener("click", toggleCard);
 projectList.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleCard(e); } });
 
 // Static sections reveal
-[[".block h2", "left"], [".block > p", "up"], [".stats li", "up"], [".timeline li", "right"], [".block .cta", "up"]].forEach(([sel, dir]) =>
+[[".block h2", "left"], [".block > p", "up"], [".stats li", "up"], [".timeline li", "right"], [".block .cta", "up"], [".ccard", "zoom"], [".vcard", "zoom"]].forEach(([sel, dir]) =>
   document.querySelectorAll(sel).forEach((el, i) => prep(el, dir, i)));
 
-renderSkills(); renderProjects(); updateStats(); booted = true;
+renderSkills(); renderProjects(); updateStats(); drawViz(); booted = true;
 
 // Hero chart: bars + trend line, built with SVG
 (function () {
