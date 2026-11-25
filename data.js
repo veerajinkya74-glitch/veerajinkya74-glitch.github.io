@@ -167,6 +167,17 @@ window.PORTFOLIO_DEFAULT = {
         "Evaluated offline on a held-out test split, achieving 0.4000 Recall@5, 0.2649 NDCG@5, and 38.2% catalog coverage."
       ],
       "link": "https://github.com/veerajinkya74-glitch/context-aware-study-recommender"
+    },
+    {
+      "title": "Adidas Interactive Sales Analytics Dashboard",
+      "tags": "Power BI · DAX · Data Modeling · Data Visualization",
+      "desc": "An interactive, multi-page Power BI executive dashboard analyzing Adidas retail performance across product categories, US sales regions, distribution channels, and year-over-year revenue growth.",
+      "points": [
+        "Designed a multi-page Power BI dashboard tracking total revenue, operating profit, units sold, and profit margins using custom DAX measures.",
+        "Analyzed sales performance across product categories (Footwear, Apparel), geographic regions, and sales methods (In-store, Online, Outlet).",
+        "Built interactive slicers, drill-through views, and year-over-year growth trend visuals to uncover top-performing retailers and regional bottlenecks."
+      ],
+      "link": "https://github.com/veerajinkya74-glitch/adidas-sales-dashboard"
     }
   ]
 };
