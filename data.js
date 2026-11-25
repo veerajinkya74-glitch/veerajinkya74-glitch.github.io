@@ -155,6 +155,18 @@ window.PORTFOLIO_DEFAULT = {
         "Designed an animated frontend with a weather-reactive background and a live result ticket"
       ],
       "link": "https://github.com/veerajinkya74-glitch/smart-canteen-ml"
+    },
+    {
+      "title": "NextStep AI — Context-Aware Study & Coding Recommender",
+      "tags": "Python · Scikit-learn · Flask · SQLite · JavaScript · Chart.js",
+      "desc": "An end-to-end hybrid recommendation engine that suggests coding problems, visual guides, and Kaggle datasets based on weak topics, recent errors, available study time, and target interview roadmaps.",
+      "points": [
+        "Built a hybrid ML ranking engine combining TruncatedSVD collaborative filtering and TF-IDF cosine similarity with context-aware time-window filtering and weak-topic boosting.",
+        "Engineered an automated CSV ingestion pipeline in SQLite and a Flask REST API with real-time model retraining on user feedback.",
+        "Designed an interactive Tailwind and Chart.js frontend featuring a live Skill Mastery Radar, per-card Pomodoro focus timers, and cold-start learner onboarding.",
+        "Evaluated offline on a held-out test split, achieving 0.4000 Recall@5, 0.2649 NDCG@5, and 38.2% catalog coverage."
+      ],
+      "link": "https://github.com/veerajinkya74-glitch/context-aware-study-recommender"
     }
   ]
 };
