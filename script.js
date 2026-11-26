@@ -150,6 +150,36 @@ renderSkills(); renderProjects(); updateStats(); drawViz(); booted = true;
 /* ===== Animations ===== */
 const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+let sfxOn = false, audioCtx = null;
+const soundToggle = document.getElementById("soundToggle");
+function playSfx(kind = "coin") {
+  if (!sfxOn || !audioCtx) return;
+  const now = audioCtx.currentTime;
+  const notes = kind === "select" ? [660, 880] : kind === "jump" ? [440, 740, 990] : [520, 780];
+  notes.forEach((hz, i) => {
+    const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+    osc.type = "square"; osc.frequency.setValueAtTime(hz, now + i * .055);
+    gain.gain.setValueAtTime(.0001, now + i * .055);
+    gain.gain.exponentialRampToValueAtTime(.035, now + i * .055 + .008);
+    gain.gain.exponentialRampToValueAtTime(.0001, now + i * .055 + .075);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(now + i * .055); osc.stop(now + i * .055 + .08);
+  });
+}
+soundToggle.addEventListener("click", async () => {
+  sfxOn = !sfxOn;
+  soundToggle.setAttribute("aria-pressed", String(sfxOn));
+  soundToggle.setAttribute("aria-label", sfxOn ? "Turn game sound effects off" : "Turn game sound effects on");
+  soundToggle.textContent = sfxOn ? "♫ SFX ON" : "♫ SFX OFF";
+  if (sfxOn) {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (AudioCtx) { audioCtx ||= new AudioCtx(); if (audioCtx.state === "suspended") await audioCtx.resume(); playSfx("coin"); }
+    else { sfxOn = false; soundToggle.setAttribute("aria-pressed", "false"); soundToggle.textContent = "♫ SFX N/A"; }
+  }
+});
+document.addEventListener("click", e => {
+  if (e.target.closest(".cta .btn, .card")) playSfx("select");
+});
 // 1. Typing effect
 (function () {
   const words = ["Python and SQL", "Pandas and EDA", "Power BI dashboards", "machine learning models", "Streamlit apps"];
@@ -183,12 +213,17 @@ document.querySelectorAll("[data-count]").forEach(el => cio.observe(el));
 const bar = document.getElementById("progress");
 const links = [...document.querySelectorAll(".nav nav a")];
 const secs = links.map(a => document.querySelector(a.getAttribute("href")));
+let soundedSection = "";
 addEventListener("scroll", () => {
   const h = document.documentElement;
   bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + "%";
   let cur = -1;
   secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * .4) cur = i; });
   links.forEach((a, i) => a.classList.toggle("active", i === cur));
+  if (cur >= 0 && links[cur].textContent !== soundedSection) {
+    soundedSection = links[cur].textContent;
+    playSfx("jump");
+  }
 }, {passive: true});
 
 // 5. Cursor glow, hero chart tilt, card 3D tilt
